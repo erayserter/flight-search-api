@@ -2,9 +2,11 @@ package com.erayserter.flightsearchapi.models;
 
 import jakarta.persistence.*;
 
+import jakarta.persistence.CascadeType;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -13,6 +15,9 @@ import java.util.Date;
 @Setter
 @ToString
 @Entity
+@SQLDelete(sql = "UPDATE flight SET deleted = true WHERE id = ?")
+@FilterDef(name = "deletedFlightFilter", parameters = @ParamDef(name = "isDeleted", type = boolean.class))
+@Filter(name = "deletedFlightFilter", condition = "deleted = :isDeleted")
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,4 +34,6 @@ public class Flight {
     private Date arrivalDate;
 
     private BigDecimal price;
+
+    private boolean deleted = false;
 }
