@@ -1,11 +1,6 @@
 package com.erayserter.flightsearchapi.models;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +15,7 @@ import java.util.Date;
 @Entity
 public class Flight {
     @Id
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @OneToOne(cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
